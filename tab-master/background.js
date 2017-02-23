@@ -27,10 +27,16 @@ function displayDisable() {
 function enable() {
 	 chrome.storage.local.set({'toggle': true}, function() {
      });
+     chrome.browserAction.setIcon({
+	  path : "icon.png"
+	 });
 }
 function disable() {
 	 chrome.storage.local.set({'toggle': false}, function() {
      });
+     chrome.browserAction.setIcon({
+	  path : "close.png"
+	 });
 }
 
 function refresh() {
