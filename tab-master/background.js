@@ -31,4 +31,5 @@ function disable() {
      });
 }
 
-displayEnable();
+enable();
+displayDisable();
