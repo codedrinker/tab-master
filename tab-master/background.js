@@ -6,6 +6,7 @@ function displayEnable () {
 	      onclick: function() {
 	        enable();
 	        displayDisable();
+	        refresh();
 	      }
 	});
 }
@@ -18,6 +19,7 @@ function displayDisable() {
 	      onclick: function() {
 	        disable();
 	        displayEnable();
+	        refresh();
 	      }
 	});
 }
@@ -29,6 +31,13 @@ function enable() {
 function disable() {
 	 chrome.storage.local.set({'toggle': false}, function() {
      });
+}
+
+function refresh() {
+	chrome.tabs.getSelected(null, function(tab) {
+        tabId = tab.id;
+        chrome.tabs.reload(tabId);
+    });
 }
 
 enable();
