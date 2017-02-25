@@ -4,7 +4,7 @@ An extension for Chrome, You can manage the way as you want when you open a link
 
 # Chrome Webstore
 
-https://chrome.google.com/webstore/detail/tab-master-for-chrome/eiafbhhipiidpibminofpnhmcooablho?utm_source=gmail
+https://chrome.google.com/webstore/detail/tab-master-for-chrome/eiafbhhipiidpibminofpnhmcooablho?utm_source=github
 
 # MIT License
 Copyright (c) 2017 Chunlei Wang
