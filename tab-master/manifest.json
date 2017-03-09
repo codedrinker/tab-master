@@ -1,34 +1,34 @@
 {
-  "manifest_version": 2,
-  "name": "Tab Master for Chrome",
-  "version": "1.0.2",
-  "description": "You can manage the way as you want when you open a link in Chrome with this extension from anywhere of current page.",
-  "content_scripts": [
-    {
-      "js": [
-        "app.js"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ]
+    "manifest_version": 2,
+    "name": "Tab Master for Chrome",
+    "version": "1.0.2",
+    "description": "You can manage the way as you want when you open a link in Chrome with this extension from anywhere of current page.",
+    "content_scripts": [{
+        "js": [
+            "js/app.js"
+        ],
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ]
+    }],
+    "permissions": [
+        "contextMenus",
+        "storage",
+        "tabs"
+    ],
+    "browser_action": {
+        "default_icon": "images/icon.png",
+        "default_title": "Tab Master for Chrome",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ]
+    },
+    "options_page": "options.html",
+    "icons": {
+        "128": "images/128.png"
     }
-  ],
-  "permissions": [
-    "contextMenus",
-    "storage",
-    "tabs"
-  ],
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_title": "Tab Master for Chrome"
-  },
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  },
-  "icons": {
-    "128": "128.png"
-  }
 }
