@@ -28,14 +28,14 @@ function enable() {
 	 chrome.storage.local.set({'toggle': true}, function() {
      });
      chrome.browserAction.setIcon({
-	  path : "images/icon.png"
+	  path : "icon.png"
 	 });
 }
 function disable() {
 	 chrome.storage.local.set({'toggle': false}, function() {
      });
      chrome.browserAction.setIcon({
-	  path : "images/close.png"
+	  path : "close.png"
 	 });
 }
 
