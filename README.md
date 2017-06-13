@@ -1,6 +1,8 @@
 # tab-master
 An extension for Chrome, You can manage the way as you want when you open a link in Chrome with this extension from anywhere of current page.
 
+# Website
+https://chrome.google.com/webstore/detail/tab-master-for-chrome/eiafbhhipiidpibminofpnhmcooablho?utm_source=github
 
 # MIT License
 Copyright (c) 2017 Chunlei Wang
