@@ -1,8 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Tab Master for Chrome",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "You can manage the way as you want when you open a link in Chrome with this extension from anywhere of current page.",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  },
   "content_scripts": [
     {
       "js": [
@@ -17,7 +22,8 @@
   "permissions": [
     "contextMenus",
     "storage",
-    "tabs"
+    "tabs",
+    "activeTab"
   ],
   "browser_action": {
     "default_icon": "icon.png",
@@ -26,9 +32,11 @@
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "persistent": true
   },
   "icons": {
-    "128": "128.png"
+    "128": "icon_128x128.png",
+    "16": "icon_16x16.png"
   }
 }
