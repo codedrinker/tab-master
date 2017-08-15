@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tab Master for Chrome",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "You can manage the way as you want when you open a link in Chrome with this extension from anywhere of current page.",
   "options_ui": {
     "page": "options.html",
