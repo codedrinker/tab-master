@@ -1,3 +1,31 @@
+function attachContextMenu() {
+    chrome.storage.sync.get({
+        block_mode: true,
+        white_list: [],
+        block_list: []
+    }, function (items) {
+        var block_mode = items.block_mode;
+        if (block_mode) {
+            chrome.contextMenus.create({
+                "title": "Enable On current apge",
+                "contexts": ["page"],
+                "onclick": function (info) {
+                    add2whitelist(info.pageUrl);
+                    refresh();
+                }
+            });
+        } else {
+            chrome.contextMenus.create({
+                "title": "Disable on current page",
+                "contexts": ["page"],
+                "onclick": function (info) {
+                    add2blocklist(info.pageUrl);
+                    refresh();
+                }
+            });
+        }
+    });
+}
 function displayEnable() {
     chrome.contextMenus.removeAll();
     chrome.contextMenus.create({
@@ -9,13 +37,7 @@ function displayEnable() {
             refresh();
         }
     });
-    chrome.contextMenus.create({
-        "title": "Add to Block List",
-        "contexts": ["page"],
-        "onclick": function (info) {
-            add2blocklist(info.pageUrl);
-        }
-    });
+    attachContextMenu(block_mode);
 }
 
 function displayDisable() {
@@ -29,13 +51,7 @@ function displayDisable() {
             refresh();
         }
     });
-    chrome.contextMenus.create({
-        "title": "Add to Block List",
-        "contexts": ["page"],
-        "onclick": function (info) {
-            add2blocklist(info.pageUrl);
-        }
-    });
+    attachContextMenu();
 }
 
 function enable() {
@@ -89,6 +105,28 @@ function add2blocklist(url) {
         block_list.push(hostname);
         chrome.storage.sync.set({block_list: block_list}, function () {
 
+        });
+    });
+}
+function add2whitelist(url) {
+    var hostname = getHostname(url);
+    chrome.storage.sync.get({white_list: []}, function (result) {
+        var white_list = result.white_list;
+        if (white_list.indexOf(hostname) != -1) return;
+        white_list.push(hostname);
+        chrome.storage.sync.set({white_list: white_list}, function () {
+        });
+    });
+}
+function removeFromwhitelist(url) {
+    var hostname = getHostname(url);
+    chrome.storage.sync.get({white_list: []}, function (result) {
+        var white_list = result.white_list;
+        var index = white_list.indexOf(hostname);
+        if (index > -1) {
+            white_list.splice(index, 1);
+        }
+        chrome.storage.sync.set({white_list: white_list}, function () {
         });
     });
 }

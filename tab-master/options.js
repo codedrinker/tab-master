@@ -1,7 +1,9 @@
 function save_options() {
     var toggle = document.getElementById('toggle').checked;
+    var block_mode = document.getElementById('block_mode').checked;
     chrome.storage.sync.set({
-        toggle: toggle
+        toggle: toggle,
+        block_mode: block_mode
     }, function () {
         show_message("Changes Saved.");
         checkToggle();
@@ -11,21 +13,29 @@ function save_options() {
 function restore_options() {
     chrome.storage.sync.get({
         toggle: true,
-        block_list: []
+        block_mode: true,
+        block_list: [],
+        white_list: []
     }, function (items) {
         document.getElementById('toggle').checked = items.toggle;
-        if (!!items.block_list && items.block_list.length != 0) {
-            generate_block_list_table(items.block_list)
+        document.getElementById('block_mode').checked = items.block_mode;
+        if (items.block_mode) {
+            if (!!items.white_list && items.white_list.length != 0) {
+                generate_list_table("White List", items.white_list)
+            }
+        } else {
+            if (!!items.block_list && items.block_list.length != 0) {
+                generate_list_table("Block List", items.block_list)
+            }
         }
     });
 }
 
-function generate_block_list_table(block_list) {
+function generate_list_table(table_title, block_list) {
     var title = document.createElement("h1");
-    title.textContent = "Block List";
+    title.textContent = table_title;
     document.body.appendChild(title);
     var blockListTableNode = document.createElement('table');
-    blockListTableNode.id = "block-list-table";
     blockListTableNode.className = "options-table";
     var header = createTableHeader();
     blockListTableNode.appendChild(header);
@@ -48,7 +58,7 @@ function createCellNode(blockHostname) {
     optionTd.style.color = "blue";
     optionTd.addEventListener("click", function (e) {
         var hostname = e.srcElement.getAttribute("data-bind");
-        removeFromBlocklist(hostname);
+        removeFromList(hostname);
         e.srcElement.parentNode.parentNode.removeChild(e.srcElement.parentNode);
         show_message("Remove " + hostname + " Successfully.");
     });
@@ -69,17 +79,33 @@ function createTableHeader() {
     return tr;
 }
 
-function removeFromBlocklist(hostname) {
-    chrome.storage.sync.get({block_list: []}, function (result) {
-        var block_list = result.block_list;
-        if (!block_list) return;
-        var index = block_list.indexOf(hostname);
-        if (index > -1) {
-            block_list.splice(index, 1);
+function removeFromList(hostname) {
+    chrome.storage.sync.get({
+        block_mode: true,
+        block_list: [],
+        white_list: []
+    }, function (items) {
+        if (items.block_mode) {
+            var white_list = result.white_list;
+            if (!white_list) return;
+            var index = white_list.indexOf(hostname);
+            if (index > -1) {
+                white_list.splice(index, 1);
+            }
+            chrome.storage.sync.set({white_list: white_list}, function () {
+                console.log("Remove " + hostname + " Succeed.")
+            });
+        } else {
+            var block_list = result.block_list;
+            if (!block_list) return;
+            var index = block_list.indexOf(hostname);
+            if (index > -1) {
+                block_list.splice(index, 1);
+            }
+            chrome.storage.sync.set({block_list: block_list}, function () {
+                console.log("Remove " + hostname + " Succeed.")
+            });
         }
-        chrome.storage.sync.set({block_list: block_list}, function () {
-            console.log("Remove " + hostname + " Succeed.")
-        });
     });
 }
 
